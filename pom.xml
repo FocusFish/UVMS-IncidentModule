@@ -6,10 +6,10 @@
     <parent>
         <groupId>fish.focus.uvms.maven</groupId>
         <artifactId>uvms-pom</artifactId>
-        <version>3.8</version>
+        <version>3.16</version>
     </parent>
 
-    <groupId>eu.europa.ec.fisheries.uvms.incident</groupId>
+    <groupId>fish.focus.uvms.incident</groupId>
     <artifactId>incident</artifactId>
     <version>1.0.12-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -24,13 +24,13 @@
         <docker.liquibase.db.passwd>incident</docker.liquibase.db.passwd>
 
         <!-- UVMS Libraries -->
-        <uvms.common.version>4.1.11</uvms.common.version>
-        <movement.version>5.6.8-UVMS</movement.version>
-        <asset.version>6.8.22</asset.version>
-        <exchange.module>5.3.22-UVMS</exchange.module>
-        <spatial.version>2.2.10-UVMS</spatial.version>
-        <usm4uvms.version>4.1.9</usm4uvms.version>
-        <uvms.pom>3.8</uvms.pom>
+        <uvms.common.version>4.1.12</uvms.common.version>
+        <movement.version>5.6.9</movement.version>
+        <asset.version>6.8.23</asset.version>
+        <exchange.module>5.3.23</exchange.module>
+        <spatial.version>2.2.11</spatial.version>
+        <usm4uvms.version>4.1.10</usm4uvms.version>
+        <uvms.pom>3.16</uvms.pom>
     </properties>
 
     <dependencies>
@@ -82,34 +82,11 @@
         </dependencies>
     </dependencyManagement>
 
-    <distributionManagement>
-        <repository>
-            <id>focus-releases</id>
-            <name>UnionVms Repository</name>
-            <url>http://nexus.focus.fish/nexus/content/repositories/releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>focus-snapshots</id>
-            <name>UnionVms Snapshot Repository</name>
-            <url>http://nexus.focus.fish/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
-
     <scm>
-        <connection>scm:git:git@github.com:UnionVMS/UVMS-IncidentModule.git</connection>
-        <developerConnection>scm:git:git@github.com:UnionVMS/UVMS-IncidentModule.git</developerConnection>
+        <connection>scm:git:git@github.com:FocusFish/UVMS-IncidentModule.git</connection>
+        <developerConnection>scm:git:git@github.com:FocusFish/UVMS-IncidentModule.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>com.amashchenko.maven.plugin</groupId>
-                <artifactId>gitflow-maven-plugin</artifactId>
-                <version>1.17.0</version>
-            </plugin>
-        </plugins>
-    </build>
 
     <modules>
         <module>LIQUIBASE</module>

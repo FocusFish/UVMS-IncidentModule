@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>eu.europa.ec.fisheries.uvms.incident</groupId>
+        <groupId>fish.focus.uvms.incident</groupId>
         <artifactId>incident</artifactId>
         <version>1.0.12-SNAPSHOT</version>
     </parent>
@@ -29,43 +29,43 @@
         </dependency>
 
         <dependency>
-            <groupId>eu.europa.ec.fisheries.uvms.movement</groupId>
+            <groupId>fish.focus.uvms.movement</groupId>
             <artifactId>movement-client</artifactId>
             <version>${movement.version}</version>
             <exclusions>
                 <exclusion>
-                        <groupId>eu.europa.ec.fisheries.uvms</groupId>
+                        <groupId>fish.focus.uvms</groupId>
                         <artifactId>usm4uvms</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>eu.europa.ec.fisheries.uvms</groupId>
+            <groupId>fish.focus.uvms.lib</groupId>
             <artifactId>usm4uvms</artifactId>
             <version>${usm4uvms.version}</version>
         </dependency>
         <dependency>
-            <groupId>eu.europa.ec.fisheries.uvms.asset</groupId>
+            <groupId>fish.focus.uvms.asset</groupId>
             <artifactId>asset-client</artifactId>
             <version>${asset.version}</version>
         </dependency>
         <dependency>
-            <groupId>eu.europa.ec.fisheries.uvms.spatialSwe</groupId>
+            <groupId>fish.focus.uvms.spatial</groupId>
             <artifactId>spatial-model</artifactId>
             <version>${spatial.version}</version>
         </dependency>
         <dependency>
-            <groupId>eu.europa.ec.fisheries.uvms.commons</groupId>
+            <groupId>fish.focus.uvms.commons</groupId>
             <artifactId>uvms-commons-message</artifactId>
             <version>${uvms.common.version}</version>
         </dependency>
         <dependency>
-            <groupId>eu.europa.ec.fisheries.uvms.commons</groupId>
+            <groupId>fish.focus.uvms.commons</groupId>
             <artifactId>uvms-commons-date</artifactId>
             <version>${uvms.common.version}</version>
         </dependency>
         <dependency>
-            <groupId>eu.europa.ec.fisheries.uvms.commons</groupId>
+            <groupId>fish.focus.uvms.commons</groupId>
             <artifactId>uvms-commons-rest</artifactId>
             <version>${uvms.common.version}</version>
         </dependency>
@@ -109,7 +109,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>eu.europa.ec.fisheries.uvms.exchange</groupId>
+            <groupId>fish.focus.uvms.exchange</groupId>
             <artifactId>exchange-model</artifactId>
             <version>${exchange.module}</version>
             <scope>test</scope>
