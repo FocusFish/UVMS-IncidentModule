@@ -47,7 +47,7 @@ public class IncidentRestResourceTest extends BuildIncidentTestDeployment {
                 .get(new GenericType<Map<IncidentType, List<StatusEnum>>>() {});
         assertNotNull(response);
         for (IncidentType value : IncidentType.values()) {
-            assertTrue(value.name(), value.getValidStatuses().equals(response.get(value.name())));
+            assertTrue(value.name(), value.getValidStatuses().equals(response.get(value)));
         }
     }
 
@@ -410,8 +410,8 @@ public class IncidentRestResourceTest extends BuildIncidentTestDeployment {
         Map<Long, IncidentDto> responseLogs = response.readEntity(new GenericType<Map<Long, IncidentDto>>() {});
         assertNotNull(responseLogs);
         assertEquals(2, responseLogs.size());
-        assertTrue(responseLogs.containsKey("" + closedIncident.getId()));
-        assertTrue(responseLogs.containsKey("" + createdIncident2.getId()));
+        assertTrue(responseLogs.containsKey(closedIncident.getId()));
+        assertTrue(responseLogs.containsKey(createdIncident2.getId()));
     }
 
     @Test
@@ -441,8 +441,8 @@ public class IncidentRestResourceTest extends BuildIncidentTestDeployment {
         Map<Long, IncidentDto> responseLogs = response.readEntity(new GenericType<Map<Long, IncidentDto>>() {});
         assertNotNull(responseLogs);
         assertEquals(1, responseLogs.size());
-        assertFalse(responseLogs.containsKey("" + closedIncident.getId()));
-        assertTrue(responseLogs.containsKey("" + createdIncident2.getId()));
+        assertFalse(responseLogs.containsKey(closedIncident.getId()));
+        assertTrue(responseLogs.containsKey(createdIncident2.getId()));
     }
 
     private IncidentDto createIncident(IncidentDto incident){
