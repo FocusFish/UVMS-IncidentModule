@@ -40,7 +40,7 @@
 
 	<filter>
 		<filter-name>RequestFilter</filter-name>
-		<filter-class>eu.europa.ec.fisheries.uvms.incident.rest.filters.RequestFilter</filter-class>
+		<filter-class>fish.focus.uvms.incident.rest.filters.RequestFilter</filter-class>
 		<async-supported>true</async-supported>
 	</filter>
 
@@ -51,7 +51,7 @@
 	
     <filter>
         <filter-name>AuthenticationFilter</filter-name>
-        <filter-class>eu.europa.ec.fisheries.uvms.rest.security.AuthenticationFilter</filter-class>
+        <filter-class>fish.focus.uvms.rest.security.AuthenticationFilter</filter-class>
 		<async-supported>true</async-supported>
     </filter>
 
@@ -62,7 +62,7 @@
 	
 	<filter>
 	     <filter-name>MDCFilter</filter-name>
-	     <filter-class>eu.europa.ec.fisheries.uvms.commons.rest.filter.MDCFilter</filter-class>
+	     <filter-class>fish.focus.uvms.commons.rest.filter.MDCFilter</filter-class>
 		 <async-supported>true</async-supported>
 	</filter>
 	

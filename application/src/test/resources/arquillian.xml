@@ -17,8 +17,8 @@
     </container>
     
     <extension qualifier="jacoco">
-	    <property name="excludes">eu.europa.ec.fisheries.schema.*</property>
-	    <property name="includes">eu.europa.ec.fisheries.uvms.incident.*</property>
+	    <property name="excludes">fish.focus.schema.*</property>
+	    <property name="includes">fish.focus.uvms.incident.*</property>
 	</extension>
   
 </arquillian>

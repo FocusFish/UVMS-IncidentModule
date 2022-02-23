@@ -7,7 +7,7 @@
 
     <persistence-unit name="incidentPU" transaction-type="JTA">
         <jta-data-source>jdbc/uvms_incident</jta-data-source>
-        <class>eu.europa.ec.fisheries.uvms.config.service.entity.Parameter</class>
+        <class>fish.focus.uvms.config.service.entity.Parameter</class>
         <properties>
             <property name="hibernate.dialect" value="${hibernate.spatial.dialect}"/>
             <property name="hibernate.generate_statistics" value="true"/>
