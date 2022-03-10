@@ -6,7 +6,7 @@
     <parent>
         <groupId>fish.focus.uvms.maven</groupId>
         <artifactId>uvms-pom</artifactId>
-        <version>3.16</version>
+        <version>3.18</version>
     </parent>
 
     <groupId>fish.focus.uvms.incident</groupId>
@@ -30,7 +30,7 @@
         <exchange.module>5.3.23</exchange.module>
         <spatial.version>2.2.11</spatial.version>
         <usm4uvms.version>4.1.10</usm4uvms.version>
-        <uvms.pom>3.16</uvms.pom>
+        <uvms.pom>3.18</uvms.pom>
     </properties>
 
     <dependencies>
