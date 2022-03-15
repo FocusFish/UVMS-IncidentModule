@@ -27,7 +27,7 @@
         <uvms.common.version>4.1.12</uvms.common.version>
         <movement.version>5.6.10</movement.version>
         <asset.version>6.8.24</asset.version>
-        <exchange.module>5.3.25</exchange.module>
+        <exchange.module>5.3.26</exchange.module>
         <spatial.version>2.2.12</spatial.version>
         <usm4uvms.version>4.1.11</usm4uvms.version>
         <uvms.pom>3.18</uvms.pom>
