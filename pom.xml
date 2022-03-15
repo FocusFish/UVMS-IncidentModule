@@ -25,7 +25,7 @@
 
         <!-- UVMS Libraries -->
         <uvms.common.version>4.1.12</uvms.common.version>
-        <movement.version>5.6.9</movement.version>
+        <movement.version>5.6.10</movement.version>
         <asset.version>6.8.24</asset.version>
         <exchange.module>5.3.25</exchange.module>
         <spatial.version>2.2.12</spatial.version>
