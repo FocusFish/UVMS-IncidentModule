@@ -18,7 +18,7 @@
     <properties>
         <installAtEnd>false</installAtEnd>
 
-        <docker.dev.version>4.2.3</docker.dev.version>
+        <docker.dev.version>4.2.5</docker.dev.version>
         <docker.liquibase.changeLogFile>LIQUIBASE/changelog/db-changelog-master.xml</docker.liquibase.changeLogFile>
         <docker.liquibase.db.user>incident</docker.liquibase.db.user>
         <docker.liquibase.db.passwd>incident</docker.liquibase.db.passwd>
