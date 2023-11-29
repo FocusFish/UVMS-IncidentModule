@@ -25,7 +25,7 @@ import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-@Path("spatialSwe/spatialnonsecure/json")
+@Path("spatial/spatialnonsecure/json")
 @Stateless
 public class SpatialModuleMock {
 

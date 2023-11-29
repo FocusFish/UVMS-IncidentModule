@@ -6,31 +6,31 @@
     <parent>
         <groupId>fish.focus.uvms.maven</groupId>
         <artifactId>uvms-pom</artifactId>
-        <version>3.16</version>
+        <version>3.19</version>
     </parent>
 
     <groupId>fish.focus.uvms.incident</groupId>
     <artifactId>incident</artifactId>
-    <version>1.0.12</version>
+    <version>1.0.13</version>
     <packaging>pom</packaging>
     <description>Incident handling module</description>
 
     <properties>
         <installAtEnd>false</installAtEnd>
 
-        <docker.dev.version>4.1.4</docker.dev.version>
+        <docker.dev.version>4.2.21</docker.dev.version>
         <docker.liquibase.changeLogFile>LIQUIBASE/changelog/db-changelog-master.xml</docker.liquibase.changeLogFile>
         <docker.liquibase.db.user>incident</docker.liquibase.db.user>
         <docker.liquibase.db.passwd>incident</docker.liquibase.db.passwd>
 
         <!-- UVMS Libraries -->
         <uvms.common.version>4.1.12</uvms.common.version>
-        <movement.version>5.6.9</movement.version>
-        <asset.version>6.8.23</asset.version>
-        <exchange.module>5.3.23</exchange.module>
-        <spatial.version>2.2.11</spatial.version>
-        <usm4uvms.version>4.1.10</usm4uvms.version>
-        <uvms.pom>3.16</uvms.pom>
+        <movement.version>5.6.19</movement.version>
+        <asset.version>6.8.26</asset.version>
+        <exchange.module>5.3.27</exchange.module>
+        <spatial.version>2.2.12</spatial.version>
+        <usm4uvms.version>4.1.11</usm4uvms.version>
+        <uvms.pom>3.19</uvms.pom>
     </properties>
 
     <dependencies>
@@ -74,7 +74,7 @@
                 <type>pom</type>
             </dependency>
             <dependency>
-                <groupId>eu.europa.ec.fisheries.uvms.docker</groupId>
+                <groupId>fish.focus.uvms.docker</groupId>
                 <artifactId>uvms-docker-wildfly-unionvms</artifactId>
                 <version>${docker.dev.version}</version>
                 <type>pom</type>
