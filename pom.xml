@@ -24,7 +24,7 @@
         <docker.liquibase.db.passwd>incident</docker.liquibase.db.passwd>
 
         <!-- UVMS Libraries -->
-        <uvms.common.version>4.1.14</uvms.common.version>
+        <uvms.common.version>4.1.15</uvms.common.version>
         <movement.version>5.6.19</movement.version>
         <asset.version>6.8.26</asset.version>
         <exchange.module>5.3.27</exchange.module>
