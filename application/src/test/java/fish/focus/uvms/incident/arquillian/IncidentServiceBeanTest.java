@@ -20,6 +20,7 @@ import fish.focus.uvms.incident.service.domain.entities.IncidentLog;
 import fish.focus.uvms.incident.service.helper.IncidentHelper;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -31,6 +32,9 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.locks.LockSupport;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.*;
 
 @RunWith(Arquillian.class)
@@ -57,6 +61,11 @@ public class IncidentServiceBeanTest extends TransactionalTests {
         jsonb = new JsonBConfigurator().getContext(null);
     }
 
+    @Before
+    public void resetTestSystemProperties() {
+        System.clearProperty("AssetPollExceptionMessage");
+    }
+
     @Test
     @OperateOnDeployment("incident")
     public void getAllOpenIncidentsTest() throws Exception {
@@ -67,6 +76,7 @@ public class IncidentServiceBeanTest extends TransactionalTests {
         UUID mobTermId = UUID.randomUUID();
         IncidentTicketDto ticket = TicketHelper.createTicket(assetId, movementId, mobTermId);
         ticket.setType(IncidentType.ASSET_NOT_SENDING);
+
         String asString = jsonb.toJson(ticket);
         jmsHelper.sendMessageToIncidentQueue(asString, "IncidentUpdate");
 
@@ -74,6 +84,50 @@ public class IncidentServiceBeanTest extends TransactionalTests {
 
         OpenAndRecentlyResolvedIncidentsDto after = incidentService.getAllOpenAndRecentlyResolvedIncidents();
         assertEquals(before.getUnresolved().size() + 1, after.getUnresolved().size());
+    }
+
+    @Test
+    @OperateOnDeployment("incident")
+    public void getAllOpenIncidentsInactiveAssetTest() throws Exception {
+        OpenAndRecentlyResolvedIncidentsDto before = incidentService.getAllOpenAndRecentlyResolvedIncidents();
+
+        UUID assetId = UUID.randomUUID();
+        UUID movementId = UUID.randomUUID();
+        UUID mobTermId = UUID.randomUUID();
+        IncidentTicketDto ticket = TicketHelper.createTicket(assetId, movementId, mobTermId);
+        ticket.setType(IncidentType.ASSET_NOT_SENDING);
+
+        System.setProperty("AssetPollExceptionMessage", assetId + " is inactive");
+
+        String asString = jsonb.toJson(ticket);
+        jmsHelper.sendMessageToIncidentQueue(asString, "IncidentUpdate");
+
+        LockSupport.parkNanos(2000000000L);
+
+        OpenAndRecentlyResolvedIncidentsDto after = incidentService.getAllOpenAndRecentlyResolvedIncidents();
+        assertThat("No new incidents should've been created", before.getUnresolved().size(), is(equalTo(after.getUnresolved().size())));
+    }
+
+    @Test
+    @OperateOnDeployment("incident")
+    public void getAllOpenIncidentsParkedAssetTest() throws Exception {
+        OpenAndRecentlyResolvedIncidentsDto before = incidentService.getAllOpenAndRecentlyResolvedIncidents();
+
+        UUID assetId = UUID.randomUUID();
+        UUID movementId = UUID.randomUUID();
+        UUID mobTermId = UUID.randomUUID();
+        IncidentTicketDto ticket = TicketHelper.createTicket(assetId, movementId, mobTermId);
+        ticket.setType(IncidentType.ASSET_NOT_SENDING);
+
+        System.setProperty("AssetPollExceptionMessage", assetId + " is parked");
+
+        String asString = jsonb.toJson(ticket);
+        jmsHelper.sendMessageToIncidentQueue(asString, "IncidentUpdate");
+
+        LockSupport.parkNanos(2000000000L);
+
+        OpenAndRecentlyResolvedIncidentsDto after = incidentService.getAllOpenAndRecentlyResolvedIncidents();
+        assertThat("No new incidents should've been created", before.getUnresolved().size(), is(equalTo(after.getUnresolved().size())));
     }
 
     @Test

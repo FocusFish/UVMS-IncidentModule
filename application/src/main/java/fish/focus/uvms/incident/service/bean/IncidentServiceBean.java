@@ -26,6 +26,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Stateless
@@ -89,8 +90,12 @@ public class IncidentServiceBean {
 
         try {
             if (IncidentType.ASSET_NOT_SENDING.equals(ticket.getType())) {
-                String pollId = assetCommunication.createPollInternal(ticket);
-                ticket.setPollId(pollId);
+                Optional<String> pollId = assetCommunication.createPollInternal(ticket);
+                if (pollId.isEmpty()) {
+                    // don't create an incident for inactive/parked assets
+                    return;
+                }
+                ticket.setPollId(pollId.get());
             }
 
             Incident incident = incidentHelper.constructIncident(ticket);
