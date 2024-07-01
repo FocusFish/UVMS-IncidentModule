@@ -25,14 +25,11 @@ import javax.json.bind.Jsonb;
 public class IncidentProducer {
 
     private final static Logger LOG = LoggerFactory.getLogger(IncidentProducer.class);
-
-    @Resource(mappedName = "java:/" + MessageConstants.EVENT_STREAM_TOPIC)
-    private Destination destination;
-
     @Inject
     @JMSConnectionFactory("java:/ConnectionFactory")
     JMSContext context;
-
+    @Resource(mappedName = "java:/" + MessageConstants.EVENT_STREAM_TOPIC)
+    private Destination destination;
     @Inject
     private IncidentHelper incidentHelper;
 

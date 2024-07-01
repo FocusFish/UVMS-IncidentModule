@@ -41,6 +41,9 @@ import static org.junit.Assert.*;
 public class IncidentServiceBeanTest extends TransactionalTests {
 
     @Inject
+    IncidentHelper incidentHelper;
+
+    @Inject
     private JMSHelper jmsHelper;
 
     @Inject
@@ -51,9 +54,6 @@ public class IncidentServiceBeanTest extends TransactionalTests {
 
     @Inject
     private IncidentLogDao incidentLogDao;
-
-    @Inject
-    IncidentHelper incidentHelper;
 
     private Jsonb jsonb;
 

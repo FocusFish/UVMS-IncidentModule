@@ -1,6 +1,6 @@
 package fish.focus.uvms.incident.model.dto.enums;
 
-public enum  StatusEnum {
+public enum StatusEnum {
     INCIDENT_CREATED,
     ATTEMPTED_CONTACT,
     MANUAL_POSITION_MODE,

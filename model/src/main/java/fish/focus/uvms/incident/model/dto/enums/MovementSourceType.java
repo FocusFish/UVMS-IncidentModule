@@ -12,11 +12,11 @@ public enum MovementSourceType {
     MovementSourceType() {
     }
 
-    public String value() {
-        return this.name();
-    }
-
     public static MovementSourceType fromValue(String v) {
         return valueOf(v);
+    }
+
+    public String value() {
+        return this.name();
     }
 }

@@ -1,10 +1,11 @@
 package fish.focus.uvms.incident.service.domain.entities;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import fish.focus.uvms.incident.model.dto.enums.IncidentType;
 import fish.focus.uvms.incident.model.dto.enums.RiskLevel;
 import fish.focus.uvms.incident.model.dto.enums.StatusEnum;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
@@ -88,7 +89,7 @@ public class Incident {
 
     @PrePersist
     @PreUpdate
-    public void preUpdate(){
+    public void preUpdate() {
         updateDate = Instant.now();
     }
 

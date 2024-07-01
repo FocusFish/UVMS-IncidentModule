@@ -1,10 +1,11 @@
 package fish.focus.uvms.incident.service.domain.entities;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import fish.focus.uvms.incident.model.dto.enums.EventTypeEnum;
 import fish.focus.uvms.incident.model.dto.enums.RelatedObjectType;
 import fish.focus.uvms.incident.model.dto.enums.StatusEnum;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.Instant;
 import java.util.UUID;
 

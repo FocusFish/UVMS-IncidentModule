@@ -37,16 +37,16 @@ public class IncidentServiceBean {
     private static final String UUID_PATTERN = "[a-f0-9]{8}(-[a-f0-9]{4}){4}[a-f0-9]{8}";
 
     @Inject
-    private IncidentLogServiceBean incidentLogServiceBean;
-
-    @Inject
-    private IncidentHelper incidentHelper;
-
-    @Inject
     AssetCommunicationBean assetCommunication;
 
     @Inject
     MovementRestClient movementRestClient;
+
+    @Inject
+    private IncidentLogServiceBean incidentLogServiceBean;
+
+    @Inject
+    private IncidentHelper incidentHelper;
 
     @Inject
     @IncidentCreate

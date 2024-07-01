@@ -12,8 +12,6 @@ details. You should have received a copy of the GNU General Public License along
 package fish.focus.uvms.incident.rest;
 
 import fish.focus.uvms.commons.date.JsonBConfigurator;
-import fish.focus.uvms.rest.security.RequiresFeature;
-import fish.focus.uvms.rest.security.UnionVMSFeature;
 import fish.focus.uvms.incident.model.dto.*;
 import fish.focus.uvms.incident.model.dto.enums.IncidentType;
 import fish.focus.uvms.incident.model.dto.enums.StatusEnum;
@@ -24,6 +22,8 @@ import fish.focus.uvms.incident.service.dao.IncidentLogDao;
 import fish.focus.uvms.incident.service.domain.entities.Incident;
 import fish.focus.uvms.incident.service.domain.entities.IncidentLog;
 import fish.focus.uvms.incident.service.helper.IncidentHelper;
+import fish.focus.uvms.rest.security.RequiresFeature;
+import fish.focus.uvms.rest.security.UnionVMSFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -83,7 +83,7 @@ public class IncidentRestResource {
             incidentDto.setStatus(incidentDto.getStatus() != null ? incidentDto.getStatus() : incidentDto.getType().getValidStatuses().get(0));
             IncidentDto createdIncident = incidentServiceBean.createIncident(incidentDto, request.getRemoteUser());
             return Response.ok(createdIncident).header("MDC", MDC.get("requestId")).build();
-        }catch (Exception e){
+        } catch (Exception e) {
             LOG.error("Error creating incident: " + e);
             throw e;
         }
@@ -93,13 +93,13 @@ public class IncidentRestResource {
     @Path("updateType/")
     @RequiresFeature(UnionVMSFeature.manageAlarmsOpenTickets)
     public Response setIncidentType(UpdateIncidentDto update) {
-        try{
+        try {
             IncidentDto createdIncident = incidentServiceBean.updateIncidentType(update.getIncidentId(), update.getType(), request.getRemoteUser());
-            if(update.getExpiryDate() != null){
+            if (update.getExpiryDate() != null) {
                 createdIncident = incidentServiceBean.updateIncidentExpiry(update.getIncidentId(), update.getExpiryDate(), request.getRemoteUser());
             }
             return Response.ok(createdIncident).build();
-        }catch (Exception e){
+        } catch (Exception e) {
             LOG.error("Error updating incident type: " + e);
             throw e;
         }
@@ -109,13 +109,13 @@ public class IncidentRestResource {
     @Path("updateStatus/")
     @RequiresFeature(UnionVMSFeature.manageAlarmsOpenTickets)
     public Response setIncidentStatus(UpdateIncidentDto update) {
-        try{
+        try {
             IncidentDto createdIncident = incidentServiceBean.updateIncidentStatus(update.getIncidentId(), update.getStatus(), request.getRemoteUser());
-            if(update.getExpiryDate() != null){
+            if (update.getExpiryDate() != null) {
                 createdIncident = incidentServiceBean.updateIncidentExpiry(update.getIncidentId(), update.getExpiryDate(), request.getRemoteUser());
             }
             return Response.ok(createdIncident).build();
-        }catch (Exception e){
+        } catch (Exception e) {
             LOG.error("Error updating incident status: " + e);
             throw e;
         }
@@ -124,11 +124,11 @@ public class IncidentRestResource {
     @PUT
     @Path("updateExpiry/")
     @RequiresFeature(UnionVMSFeature.manageAlarmsOpenTickets)
-    public Response setIncidentExpiry( UpdateIncidentDto update) {
-        try{
+    public Response setIncidentExpiry(UpdateIncidentDto update) {
+        try {
             IncidentDto createdIncident = incidentServiceBean.updateIncidentExpiry(update.getIncidentId(), update.getExpiryDate(), request.getRemoteUser());
             return Response.ok(createdIncident).build();
-        }catch (Exception e){
+        } catch (Exception e) {
             LOG.error("Error setting expiry: " + e);
             throw e;
         }
@@ -214,10 +214,10 @@ public class IncidentRestResource {
     @GET
     @Path("incidentsForAssetId/{assetId}")
     @RequiresFeature(UnionVMSFeature.viewAlarmsOpenTickets)
-    public Response getIncidentsForAssetId(@PathParam("assetId") String assetId,@DefaultValue("false") @QueryParam("onlyOpen") Boolean onlyOpen) {
+    public Response getIncidentsForAssetId(@PathParam("assetId") String assetId, @DefaultValue("false") @QueryParam("onlyOpen") Boolean onlyOpen) {
         try {
             List<Incident> incidents = incidentDao.findByAssetId(UUID.fromString(assetId));
-            if(onlyOpen){
+            if (onlyOpen) {
                 incidents = incidents.stream().filter(incident -> !incident.getStatus().equals(StatusEnum.RESOLVED)).collect(Collectors.toList());
             }
             Map<Long, IncidentDto> dtoList = incidentHelper.incidentToDtoMap(incidents);
@@ -237,7 +237,7 @@ public class IncidentRestResource {
             List<Incident> incidents = incidentDao.findByAssetId(UUID.fromString(assetId));
             List<Long> incidentIdList = incidents.stream().map(Incident::getId).collect(Collectors.toList());
             List<IncidentLog> incidentLogs = new ArrayList<>();
-            if(!incidentIdList.isEmpty()) {
+            if (!incidentIdList.isEmpty()) {
                 incidentLogs = incidentLogDao.findAllByIncidentId(incidentIdList);
             }
             Map<Long, IncidentLogDto> dtoList = incidentHelper.incidentLogToDtoMap(incidentLogs);

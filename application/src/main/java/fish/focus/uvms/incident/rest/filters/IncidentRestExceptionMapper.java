@@ -14,6 +14,7 @@ public class IncidentRestExceptionMapper implements ExceptionMapper<Exception> {
 
 
     private static final Logger LOG = LoggerFactory.getLogger(IncidentRestExceptionMapper.class);
+
     public IncidentRestExceptionMapper() {
         super();
     }

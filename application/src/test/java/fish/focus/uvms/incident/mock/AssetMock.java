@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Path("asset/rest/internal")
-@Consumes(value = { MediaType.APPLICATION_JSON })
-@Produces(value = { MediaType.APPLICATION_JSON })
+@Consumes(value = {MediaType.APPLICATION_JSON})
+@Produces(value = {MediaType.APPLICATION_JSON})
 @Stateless
 public class AssetMock {
 

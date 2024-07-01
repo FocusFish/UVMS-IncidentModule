@@ -1,8 +1,9 @@
 package fish.focus.uvms.incident.model.dto;
 
+import fish.focus.uvms.incident.model.dto.enums.MovementSourceType;
+
 import java.time.Instant;
 import java.util.UUID;
-import fish.focus.uvms.incident.model.dto.enums.MovementSourceType;
 
 
 public class MovementDto {

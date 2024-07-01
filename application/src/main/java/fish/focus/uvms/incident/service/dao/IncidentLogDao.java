@@ -27,7 +27,7 @@ public class IncidentLogDao {
         LOG.info("New Incident Log created with ID: " + entity.getId());
     }
 
-    public void update(IncidentLog log){
+    public void update(IncidentLog log) {
         em.merge(log);
     }
 

@@ -13,6 +13,7 @@ package fish.focus.uvms.incident.rest;
 
 import fish.focus.uvms.commons.date.JsonBConfigurator;
 import fish.focus.uvms.incident.rest.filters.IncidentRestExceptionMapper;
+
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import java.util.HashSet;
