@@ -20,14 +20,16 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 @Stateless
 public class AssetCommunicationBean {
 
     private static final Logger LOG = LoggerFactory.getLogger(AssetCommunicationBean.class);
+    private static final Pattern ASSET_IS_ACTIVE_OR_PARKED = Pattern.compile(".*is (inactive|parked)");
 
     @Resource(name = "java:global/asset_endpoint")
     private String assetEndpoint;
@@ -38,9 +40,8 @@ public class AssetCommunicationBean {
     @Inject
     private AssetClient assetClient;
 
-    public String createPollInternal(IncidentTicketDto dto) {
+    public Optional<String> createPollInternal(IncidentTicketDto dto) {
         try {
-
             AssetDTO assetById = assetClient.getAssetById(AssetIdentifier.GUID, dto.getAssetId());
             String username = "Triggered by asset not sending";
             String comment = "This poll was triggered by asset not sending on: " + DateUtils.dateToHumanReadableString(Instant.now())
@@ -50,32 +51,38 @@ public class AssetCommunicationBean {
             createPoll.setComment(comment);
             createPoll.setPollType(PollType.AUTOMATIC_POLL);
 
-            Response createdPollResponse = getWebTarget()
+            CreatePollResultDto createPollResultDto;
+            try (Response createdPollResponse = getWebTarget()
                     .path("internal/createPollForAsset")
                     .path(dto.getAssetId())
                     .queryParam("username", username)
                     .request(MediaType.APPLICATION_JSON)
                     .header(HttpHeaders.AUTHORIZATION, tokenHandler.createAndFetchToken("user"))
-                    .post(Entity.json(createPoll), Response.class);
+                    .post(Entity.json(createPoll), Response.class)) {
 
-            if (createdPollResponse.getStatus() != 200) {
-                return stripExceptionFromResponseString(createdPollResponse.readEntity(String.class));
+                if (createdPollResponse.getStatus() != 200) {
+                    String exceptionMessage = stripExceptionFromResponseString(createdPollResponse.readEntity(String.class));
+                    if (ASSET_IS_ACTIVE_OR_PARKED.matcher(exceptionMessage).matches()) {
+                        return Optional.empty();
+                    }
+                    return Optional.of(exceptionMessage);
+                }
+
+                createPollResultDto = createdPollResponse.readEntity(CreatePollResultDto.class);
             }
 
-            CreatePollResultDto createPollResultDto = createdPollResponse.readEntity(CreatePollResultDto.class);
             if (!createPollResultDto.isUnsentPoll()) {
-                return createPollResultDto.getSentPolls().get(0);
+                return Optional.of(createPollResultDto.getSentPolls().get(0));
             } else {
-                return createPollResultDto.getUnsentPolls().get(0);
+                return Optional.of(createPollResultDto.getUnsentPolls().get(0));
             }
-
         } catch (Exception e) {
             LOG.error("Error while sending rule-triggered poll: ", e);
-            return "NOK " + e.getMessage();
+            return Optional.of("NOK " + e.getMessage());
         }
     }
 
-    public void setAssetParkedStatus(UUID assetId, boolean parked){
+    public void setAssetParkedStatus(UUID assetId, boolean parked) {
         AssetDTO asset = assetClient.getAssetById(AssetIdentifier.GUID, assetId.toString());
         asset.setParked(parked);
         asset.setComment("Changing parked variable to " + parked);
@@ -93,8 +100,8 @@ public class AssetCommunicationBean {
         return client.target(assetEndpoint);
     }
 
-    private String stripExceptionFromResponseString(String errorString){
-        if(!errorString.contains("Exception")){
+    private String stripExceptionFromResponseString(String errorString) {
+        if (!errorString.contains("Exception")) {
             return errorString;
         }
         int exceptionEndIndex = errorString.indexOf("Exception:") + 10;
