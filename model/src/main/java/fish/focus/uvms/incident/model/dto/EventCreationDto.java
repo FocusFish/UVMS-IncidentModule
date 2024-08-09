@@ -1,8 +1,9 @@
 package fish.focus.uvms.incident.model.dto;
 
+import fish.focus.uvms.incident.model.dto.enums.EventTypeEnum;
+
 import java.io.Serializable;
 import java.util.UUID;
-import fish.focus.uvms.incident.model.dto.enums.*;
 
 public class EventCreationDto implements Serializable {
 

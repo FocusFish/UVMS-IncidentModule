@@ -4,7 +4,6 @@ import fish.focus.uvms.asset.client.AssetClient;
 import fish.focus.uvms.asset.client.model.AssetDTO;
 import fish.focus.uvms.asset.client.model.AssetIdentifier;
 import fish.focus.uvms.commons.date.JsonBConfigurator;
-import fish.focus.uvms.movement.client.MovementRestClient;
 import fish.focus.uvms.incident.model.dto.*;
 import fish.focus.uvms.incident.model.dto.enums.IncidentType;
 import fish.focus.uvms.incident.model.dto.enums.MovementSourceType;
@@ -12,16 +11,17 @@ import fish.focus.uvms.incident.model.dto.enums.StatusEnum;
 import fish.focus.uvms.incident.service.ServiceConstants;
 import fish.focus.uvms.incident.service.domain.entities.Incident;
 import fish.focus.uvms.incident.service.domain.entities.IncidentLog;
+import fish.focus.uvms.movement.client.MovementRestClient;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
 import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbBuilder;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -53,11 +53,11 @@ public class IncidentHelper {
 
     private void setAssetValues(Incident incident, String assetId) {
         AssetDTO asset = assetClient.getAssetById(AssetIdentifier.GUID, assetId);
-        if(asset != null) {
+        if (asset != null) {
             incident.setAssetId(asset.getId());
             incident.setAssetName(asset.getName());
             incident.setIrcs(asset.getIrcs());
-        }else{
+        } else {
             throw new IllegalArgumentException("Trying to create an incident for an assetGuid that does not exist. Guid: " + assetId);
         }
     }
@@ -85,25 +85,25 @@ public class IncidentHelper {
 
     public IncidentDto incidentEntityToDto(Incident incident) {
         fish.focus.uvms.movement.model.dto.MovementDto movement = null;
-        if(incident.getMovementId() != null) {
+        if (incident.getMovementId() != null) {
             movement = movementClient.getMovementById(incident.getMovementId());
-            movement = movement != null && movement.getId() != null ? movement : null ;    //for the sole reason that getMovementById returns an empty object if that move id does not exist
+            movement = movement != null && movement.getId() != null ? movement : null;    //for the sole reason that getMovementById returns an empty object if that move id does not exist
         }
         return mapEntityToDto(incident, movement);
     }
 
-    public Map<Long,IncidentDto> incidentToDtoMap(List<Incident> incidentList) {
+    public Map<Long, IncidentDto> incidentToDtoMap(List<Incident> incidentList) {
         List<UUID> movementIds = incidentList.stream()
-                    .map(Incident::getMovementId)
-                    .collect(Collectors.toList());
+                .map(Incident::getMovementId)
+                .collect(Collectors.toList());
         Map<UUID, fish.focus.uvms.movement.model.dto.MovementDto> movementMap = movementClient.getMovementDtoByIdList(movementIds)
-                    .stream()
-                    .collect(Collectors.toMap(fish.focus.uvms.movement.model.dto.MovementDto::getId, Function.identity()));
+                .stream()
+                .collect(Collectors.toMap(fish.focus.uvms.movement.model.dto.MovementDto::getId, Function.identity()));
         return incidentList
-                    .stream()
-                    .collect(Collectors.toMap(Incident::getId, i -> mapEntityToDto(i, movementMap.get(i.getMovementId()))));
+                .stream()
+                .collect(Collectors.toMap(Incident::getId, i -> mapEntityToDto(i, movementMap.get(i.getMovementId()))));
     }
-    
+
     private IncidentDto mapEntityToDto(Incident entity, fish.focus.uvms.movement.model.dto.MovementDto move) {
         IncidentDto dto = new IncidentDto();
         dto.setId(entity.getId());
@@ -120,13 +120,13 @@ public class IncidentHelper {
         if (entity.getUpdateDate() != null) {
             dto.setUpdateDate(entity.getUpdateDate());
         }
-        if(entity.getMovementId() != null && move != null) {
+        if (entity.getMovementId() != null && move != null) {
             dto.setLastKnownLocation(mapMovementMovementToIncidentMovement(move));
         }
         return dto;
     }
 
-    private MovementDto mapMovementMovementToIncidentMovement(fish.focus.uvms.movement.model.dto.MovementDto move){
+    private MovementDto mapMovementMovementToIncidentMovement(fish.focus.uvms.movement.model.dto.MovementDto move) {
         MovementDto dto = new MovementDto();
 
         MovementPointDto location = new MovementPointDto();
@@ -169,24 +169,24 @@ public class IncidentHelper {
         return retVal;
     }
 
-    public void checkIfUpdateIsAllowed(Incident oldIncident, StatusEnum status){
-        if(oldIncident.getStatus().equals(StatusEnum.RESOLVED)){
+    public void checkIfUpdateIsAllowed(Incident oldIncident, StatusEnum status) {
+        if (oldIncident.getStatus().equals(StatusEnum.RESOLVED)) {
             throw new IllegalArgumentException("Not allowed to update incident " + oldIncident.getId() + " since it has status 'RESOLVED'");
         }
 
-        if(!oldIncident.getType().getValidStatuses().contains(status)){
+        if (!oldIncident.getType().getValidStatuses().contains(status)) {
             throw new IllegalArgumentException("Incident type " + oldIncident.getType() + " does not support being placed in status " + status);
         }
     }
 
-    public void setCorrectValuesForIncidentType(Incident incident){
+    public void setCorrectValuesForIncidentType(Incident incident) {
 
-        if(incident.getType().equals(IncidentType.ASSET_NOT_SENDING)){
+        if (incident.getType().equals(IncidentType.ASSET_NOT_SENDING)) {
             incident.setExpiryDate(null);
         }
 
-        if(incident.getType().equals(IncidentType.MANUAL_POSITION_MODE)){
-            if(incident.getStatus().equals(StatusEnum.RESOLVED)){
+        if (incident.getType().equals(IncidentType.MANUAL_POSITION_MODE)) {
+            if (incident.getStatus().equals(StatusEnum.RESOLVED)) {
                 //do nothing
             } else {
                 Instant expiry;
@@ -211,7 +211,7 @@ public class IncidentHelper {
         }
     }
 
-    public String createJsonString(IncidentLogData data){
+    public String createJsonString(IncidentLogData data) {
         return jsonb.toJson(data);
     }
 

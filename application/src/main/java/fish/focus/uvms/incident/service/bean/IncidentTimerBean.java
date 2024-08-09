@@ -11,7 +11,6 @@ copy of the GNU General Public License along with the IFDM Suite. If not, see <h
  */
 package fish.focus.uvms.incident.service.bean;
 
-import fish.focus.uvms.incident.model.dto.KeyValuePair;
 import fish.focus.uvms.incident.model.dto.enums.EventTypeEnum;
 import fish.focus.uvms.incident.model.dto.enums.IncidentType;
 import fish.focus.uvms.incident.model.dto.enums.StatusEnum;
@@ -31,7 +30,6 @@ import javax.ejb.Startup;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,7 +38,7 @@ import java.util.List;
 public class IncidentTimerBean {
 
     private static final Logger LOG = LoggerFactory.getLogger(IncidentTimerBean.class);
-    
+
     @Inject
     IncidentDao incidentDao;
 
@@ -59,7 +57,7 @@ public class IncidentTimerBean {
         try {
             List<Incident> manualPositionIncidents = incidentDao.findByStatus(StatusEnum.MANUAL_POSITION_MODE);
             for (Incident incident : manualPositionIncidents) {
-                if(incident.getExpiryDate().isBefore(Instant.now())){
+                if (incident.getExpiryDate().isBefore(Instant.now())) {
                     incident.setStatus(StatusEnum.MANUAL_POSITION_LATE);
                     incidentLogServiceBean.createIncidentLogForStatus(incident, EventTypeEnum.MANUAL_POSITION_LATE, null, null);
                     updatedIncident.fire(incident);
@@ -75,9 +73,9 @@ public class IncidentTimerBean {
         try {
             List<Incident> parkedIncidents = incidentDao.findOpenByTypes(Arrays.asList(IncidentType.SEASONAL_FISHING, IncidentType.PARKED));
             for (Incident incident : parkedIncidents) {
-                if( !incident.getStatus().equals(StatusEnum.OVERDUE)
+                if (!incident.getStatus().equals(StatusEnum.OVERDUE)
                         && incident.getExpiryDate() != null
-                        && incident.getExpiryDate().isBefore(Instant.now())){
+                        && incident.getExpiryDate().isBefore(Instant.now())) {
 
                     StatusEnum oldStatus = incident.getStatus();
                     incident.setStatus(StatusEnum.OVERDUE);

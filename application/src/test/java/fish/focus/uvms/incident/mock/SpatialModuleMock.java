@@ -41,5 +41,5 @@ public class SpatialModuleMock {
         response.add(area);
         return Response.ok(response).build();
     }
-    
+
 }

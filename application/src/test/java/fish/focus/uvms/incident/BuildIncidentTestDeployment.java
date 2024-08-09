@@ -1,12 +1,12 @@
 package fish.focus.uvms.incident;
 
 import fish.focus.uvms.commons.date.JsonBConfigurator;
-import fish.focus.uvms.rest.security.UnionVMSFeature;
-import fish.focus.uvms.usm.jwt.JwtTokenHandler;
 import fish.focus.uvms.incident.mock.AssetMock;
 import fish.focus.uvms.incident.mock.MovementMock;
 import fish.focus.uvms.incident.mock.SpatialModuleMock;
 import fish.focus.uvms.incident.mock.UnionVMSRestMock;
+import fish.focus.uvms.rest.security.UnionVMSFeature;
+import fish.focus.uvms.usm.jwt.JwtTokenHandler;
 import org.eu.ingwar.tools.arquillian.extension.suite.annotations.ArquillianSuiteDeployment;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.Archive;

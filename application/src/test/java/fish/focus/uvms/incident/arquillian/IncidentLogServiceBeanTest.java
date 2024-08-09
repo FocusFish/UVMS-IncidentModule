@@ -15,7 +15,8 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 @RunWith(Arquillian.class)
 public class IncidentLogServiceBeanTest extends TransactionalTests {
@@ -30,7 +31,7 @@ public class IncidentLogServiceBeanTest extends TransactionalTests {
     @OperateOnDeployment("incident")
     public void checkIfLogHasTypeEntryFromTheLastHour() {
         UUID movementId = UUID.randomUUID();
-        Long incidentId = (long)(Math.random() * 100000d);
+        Long incidentId = (long) (Math.random() * 100000d);
 
         IncidentLog incidentLog = new IncidentLog();
         incidentLog.setRelatedObjectId(movementId);
@@ -48,7 +49,7 @@ public class IncidentLogServiceBeanTest extends TransactionalTests {
     @OperateOnDeployment("incident")
     public void checkIfLogHasTypeEntryFromTheLastHourWithOlderLog() {
         UUID movementId = UUID.randomUUID();
-        Long incidentId = (long)(Math.random() * 100000d);
+        Long incidentId = (long) (Math.random() * 100000d);
 
         IncidentLog incidentLog = new IncidentLog();
         incidentLog.setRelatedObjectId(movementId);
@@ -66,7 +67,7 @@ public class IncidentLogServiceBeanTest extends TransactionalTests {
     @OperateOnDeployment("incident")
     public void checkIfLogHasTypeEntryFromTheLastHourWithOtherLogType() {
         UUID movementId = UUID.randomUUID();
-        Long incidentId = (long)(Math.random() * 100000d);
+        Long incidentId = (long) (Math.random() * 100000d);
 
         IncidentLog incidentLog = new IncidentLog();
         incidentLog.setRelatedObjectId(movementId);

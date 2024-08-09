@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<arquillian xmlns="http://jboss.org/schema/arquillian"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<arquillian xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://jboss.org/schema/arquillian"
             xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
-    <defaultProtocol type="Servlet 3.0" />
+    <defaultProtocol type="Servlet 3.0"/>
     <container qualifier="wildfly-remote" default="true">
         <protocol type="Servlet 3.0">
             <property name="host">localhost</property>
@@ -15,10 +15,10 @@
             <property name="password">Wildfly4ever!</property>
         </configuration>
     </container>
-    
+
     <extension qualifier="jacoco">
-	    <property name="excludes">fish.focus.schema.*</property>
-	    <property name="includes">fish.focus.uvms.incident.*</property>
-	</extension>
-  
+        <property name="excludes">fish.focus.schema.*</property>
+        <property name="includes">fish.focus.uvms.incident.*</property>
+    </extension>
+
 </arquillian>

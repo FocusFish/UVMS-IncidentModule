@@ -1,9 +1,10 @@
 package fish.focus.uvms.incident.service;
 
-import java.util.Arrays;
-import java.util.List;
 import fish.focus.uvms.incident.model.dto.enums.IncidentType;
 import fish.focus.uvms.incident.model.dto.enums.StatusEnum;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class ServiceConstants {
 

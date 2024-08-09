@@ -27,11 +27,11 @@ import java.util.Map;
 @Stateless
 public class JMSHelper {
 
-    @Inject
-    public JMSContext context;
-
     public final String QUEUE_NAME = "IncidentEvent";
     public final String EVENT_STREAM = "jms.topic.EventStream";
+
+    @Inject
+    public JMSContext context;
 
     @Resource(mappedName = "java:/" + MessageConstants.QUEUE_INCIDENT)
     private Destination destination;

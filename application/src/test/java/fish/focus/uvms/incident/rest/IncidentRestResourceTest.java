@@ -44,7 +44,8 @@ public class IncidentRestResourceTest extends BuildIncidentTestDeployment {
                 .path("incident/validStatusForTypes")
                 .request(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, getToken())
-                .get(new GenericType<Map<IncidentType, List<StatusEnum>>>() {});
+                .get(new GenericType<Map<IncidentType, List<StatusEnum>>>() {
+                });
         assertNotNull(response);
         for (IncidentType value : IncidentType.values()) {
             assertTrue(value.name(), value.getValidStatuses().equals(response.get(value)));
@@ -58,7 +59,8 @@ public class IncidentRestResourceTest extends BuildIncidentTestDeployment {
                 .path("incident/incidentTypes")
                 .request(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, getToken())
-                .get(new GenericType<List<IncidentType>>() {});
+                .get(new GenericType<List<IncidentType>>() {
+                });
         assertNotNull(response);
         assertEquals(Arrays.asList(IncidentType.values()), response);
     }
@@ -274,7 +276,8 @@ public class IncidentRestResourceTest extends BuildIncidentTestDeployment {
                 .path(updatedIncident.getId().toString())
                 .request(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, getToken())
-                .get(new GenericType<Map<Long, IncidentLogDto>>() {});
+                .get(new GenericType<Map<Long, IncidentLogDto>>() {
+                });
 
         assertEquals(3, logs.size());
         assertTrue(logs.values().stream().anyMatch(log -> log.getEventType().equals(EventTypeEnum.INCIDENT_TYPE)));
@@ -309,7 +312,8 @@ public class IncidentRestResourceTest extends BuildIncidentTestDeployment {
                 .path(updatedIncident.getId().toString())
                 .request(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, getToken())
-                .get(new GenericType<Map<Long, IncidentLogDto>>() {});
+                .get(new GenericType<Map<Long, IncidentLogDto>>() {
+                });
 
         assertEquals(4, logs.size());
         assertTrue(logs.values().stream().anyMatch(log -> log.getEventType().equals(EventTypeEnum.INCIDENT_TYPE)));
@@ -350,7 +354,8 @@ public class IncidentRestResourceTest extends BuildIncidentTestDeployment {
                 .get(Response.class);
         assertEquals(200, response.getStatus());
 
-        Map<Long, IncidentLogDto> responseLogs = response.readEntity(new GenericType<Map<Long, IncidentLogDto>>() {});
+        Map<Long, IncidentLogDto> responseLogs = response.readEntity(new GenericType<Map<Long, IncidentLogDto>>() {
+        });
         assertNotNull(responseLogs);
     }
 
@@ -365,7 +370,8 @@ public class IncidentRestResourceTest extends BuildIncidentTestDeployment {
                 .get(Response.class);
         assertEquals(200, response.getStatus());
 
-        Map<Long, IncidentLogDto> responseLogs = response.readEntity(new GenericType<Map<Long, IncidentLogDto>>() {});
+        Map<Long, IncidentLogDto> responseLogs = response.readEntity(new GenericType<Map<Long, IncidentLogDto>>() {
+        });
         assertNotNull(responseLogs);
     }
 
@@ -380,7 +386,8 @@ public class IncidentRestResourceTest extends BuildIncidentTestDeployment {
                 .get(Response.class);
         assertEquals(200, response.getStatus());
 
-        Map<Long, IncidentDto> responseLogs = response.readEntity(new GenericType<Map<Long, IncidentDto>>() {});
+        Map<Long, IncidentDto> responseLogs = response.readEntity(new GenericType<Map<Long, IncidentDto>>() {
+        });
         assertNotNull(responseLogs);
     }
 
@@ -407,7 +414,8 @@ public class IncidentRestResourceTest extends BuildIncidentTestDeployment {
                 .header(HttpHeaders.AUTHORIZATION, getToken())
                 .get(Response.class);
 
-        Map<Long, IncidentDto> responseLogs = response.readEntity(new GenericType<Map<Long, IncidentDto>>() {});
+        Map<Long, IncidentDto> responseLogs = response.readEntity(new GenericType<Map<Long, IncidentDto>>() {
+        });
         assertNotNull(responseLogs);
         assertEquals(2, responseLogs.size());
         assertTrue(responseLogs.containsKey(closedIncident.getId()));
@@ -438,14 +446,15 @@ public class IncidentRestResourceTest extends BuildIncidentTestDeployment {
                 .header(HttpHeaders.AUTHORIZATION, getToken())
                 .get(Response.class);
 
-        Map<Long, IncidentDto> responseLogs = response.readEntity(new GenericType<Map<Long, IncidentDto>>() {});
+        Map<Long, IncidentDto> responseLogs = response.readEntity(new GenericType<Map<Long, IncidentDto>>() {
+        });
         assertNotNull(responseLogs);
         assertEquals(1, responseLogs.size());
         assertFalse(responseLogs.containsKey(closedIncident.getId()));
         assertTrue(responseLogs.containsKey(createdIncident2.getId()));
     }
 
-    private IncidentDto createIncident(IncidentDto incident){
+    private IncidentDto createIncident(IncidentDto incident) {
         return getWebTarget()
                 .path("incident")
                 .request(MediaType.APPLICATION_JSON)
@@ -453,7 +462,7 @@ public class IncidentRestResourceTest extends BuildIncidentTestDeployment {
                 .post(Entity.json(incident), IncidentDto.class);
     }
 
-    private IncidentDto updateIncidentStatus(UpdateIncidentDto update){
+    private IncidentDto updateIncidentStatus(UpdateIncidentDto update) {
         return getWebTarget()
                 .path("incident")
                 .path("updateStatus")
@@ -462,12 +471,13 @@ public class IncidentRestResourceTest extends BuildIncidentTestDeployment {
                 .put(Entity.json(update), IncidentDto.class);
     }
 
-    private Map<Long, IncidentLogDto> getIncidentLogForIncident(IncidentDto incident){
+    private Map<Long, IncidentLogDto> getIncidentLogForIncident(IncidentDto incident) {
         return getWebTarget()
                 .path("incident/incidentLogForIncident")
                 .path(incident.getId().toString())
                 .request(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, getToken())
-                .get(new GenericType<Map<Long, IncidentLogDto>>() {});
+                .get(new GenericType<Map<Long, IncidentLogDto>>() {
+                });
     }
 }

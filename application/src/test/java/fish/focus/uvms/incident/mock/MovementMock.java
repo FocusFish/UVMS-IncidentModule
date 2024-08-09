@@ -36,7 +36,7 @@ public class MovementMock {
     @Path("getMovement/{id}")
     public Response getMovement(@PathParam("id") UUID id) {
         MovementDto movement = new MovementDto();
-        if(id != null) {
+        if (id != null) {
             movement.setId(id);
             MovementPoint point = new MovementPoint();
             point.setLatitude(123d);
@@ -60,7 +60,7 @@ public class MovementMock {
     public Response getMovementByIdList(List<UUID> moveIds) {
         List<MovementDto> responseList = new ArrayList<>();
         for (UUID uuid : moveIds) {
-            if(uuid == null){
+            if (uuid == null) {
                 continue;
             }
             MovementDto movement = new MovementDto();
@@ -73,8 +73,8 @@ public class MovementMock {
 
             movement.setSource(uuid.getMostSignificantBits() == 0l ? MovementSourceType.NAF : MovementSourceType.MANUAL);
             movement.setTimestamp(Instant.now());
-            movement.setSpeed((float)122d);
-            movement.setHeading((float)123d);
+            movement.setSpeed((float) 122d);
+            movement.setHeading((float) 123d);
 
             responseList.add(movement);
         }

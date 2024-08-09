@@ -25,7 +25,7 @@ public class IncidentLogDaoTest extends TransactionalTests {
     @OperateOnDeployment("incident")
     public void checkIfMovementAlreadyExistsTest() {
         UUID movementId = UUID.randomUUID();
-        Long incidentId = (long)(Math.random() * 10000d);
+        Long incidentId = (long) (Math.random() * 10000d);
 
         IncidentLog incidentLog = new IncidentLog();
         incidentLog.setRelatedObjectId(movementId);

@@ -1,8 +1,9 @@
 package fish.focus.uvms.incident.model.dto;
 
-import java.time.Instant;
 import fish.focus.uvms.incident.model.dto.enums.IncidentType;
 import fish.focus.uvms.incident.model.dto.enums.StatusEnum;
+
+import java.time.Instant;
 
 public class UpdateIncidentDto {
 

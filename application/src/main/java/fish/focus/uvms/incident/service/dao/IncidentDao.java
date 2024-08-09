@@ -28,6 +28,7 @@ public class IncidentDao {
         LOG.info("New Incident created with ID: " + entity.getId());
         return entity;
     }
+
     public Incident findById(long id) {
         Incident incident = this.em.find(Incident.class, id);
         if (incident == null) {
@@ -68,7 +69,7 @@ public class IncidentDao {
         }
     }
 
-    public Incident findOpenByAssetAndType(UUID assetId, IncidentType type){
+    public Incident findOpenByAssetAndType(UUID assetId, IncidentType type) {
         try {
 
             TypedQuery<Incident> query = em.createNamedQuery(Incident.FIND_BY_ASSET_TYPE_AND_EXCLUDE_STATUS, Incident.class);
@@ -76,32 +77,32 @@ public class IncidentDao {
             query.setParameter("status", ServiceConstants.RESOLVED_STATUS_LIST);
             query.setParameter("assetId", assetId);
             return query.getSingleResult();
-        }catch (NoResultException e) {
+        } catch (NoResultException e) {
             LOG.debug("No open incident found for asset {} and type {}", assetId, type);
             return null;
         }
     }
 
-    public List<Incident> findOpenByTypes(List<IncidentType> type){
+    public List<Incident> findOpenByTypes(List<IncidentType> type) {
         TypedQuery<Incident> query = em.createNamedQuery(Incident.FIND_BY_TYPES_AND_EXCLUDE_STATUS, Incident.class);
         query.setParameter("type", type);
         query.setParameter("status", ServiceConstants.RESOLVED_STATUS_LIST);
         return query.getResultList();
     }
 
-    public List<Incident> findOpenByAsset(UUID assetId){
+    public List<Incident> findOpenByAsset(UUID assetId) {
         try {
             TypedQuery<Incident> query = em.createNamedQuery(Incident.FIND_BY_ASSET_AND_EXCLUDE_STATUS, Incident.class);
             query.setParameter("status", ServiceConstants.RESOLVED_STATUS_LIST);
             query.setParameter("assetId", assetId);
             return query.getResultList();
-        }catch (NoResultException e) {
+        } catch (NoResultException e) {
             LOG.debug("No open incident found for asset {}", assetId);
             return null;
         }
     }
 
-    public List<Incident> findByStatus(StatusEnum status){
+    public List<Incident> findByStatus(StatusEnum status) {
         TypedQuery<Incident> query = em.createNamedQuery(Incident.FIND_BY_STATUS, Incident.class);
         query.setParameter("status", status);
         return query.getResultList();

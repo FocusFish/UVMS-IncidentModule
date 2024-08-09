@@ -11,12 +11,13 @@ copy of the GNU General Public License along with the IFDM Suite. If not, see <h
  */
 package fish.focus.uvms.incident.rest.filters;
 
+import fish.focus.uvms.incident.rest.Constants;
+
 import javax.annotation.Resource;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import fish.focus.uvms.incident.rest.Constants;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -46,7 +47,7 @@ public class RequestFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String origin = httpServletRequest.getHeader("ORIGIN");
 
-        if(origin != null && validateHost(origin)) {
+        if (origin != null && validateHost(origin)) {
             HttpServletResponse response = (HttpServletResponse) res;
             response.setHeader(Constants.ACCESS_CONTROL_ALLOW_ORIGIN, origin);
             response.setHeader(Constants.ACCESS_CONTROL_ALLOW_METHODS, Constants.ACCESS_CONTROL_ALLOWED_METHODS);
