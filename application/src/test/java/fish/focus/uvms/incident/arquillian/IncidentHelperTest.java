@@ -3,7 +3,6 @@ package fish.focus.uvms.incident.arquillian;
 import fish.focus.uvms.incident.TransactionalTests;
 import fish.focus.uvms.incident.helper.TicketHelper;
 import fish.focus.uvms.incident.model.dto.IncidentDto;
-import fish.focus.uvms.incident.model.dto.KeyValuePair;
 import fish.focus.uvms.incident.model.dto.enums.IncidentType;
 import fish.focus.uvms.incident.model.dto.enums.StatusEnum;
 import fish.focus.uvms.incident.service.ServiceConstants;
@@ -16,11 +15,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
-
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
@@ -42,7 +38,7 @@ public class IncidentHelperTest extends TransactionalTests {
         try {
             incidentHelper.checkIfUpdateIsAllowed(incident, null);
             fail();
-        }catch (Exception e){
+        } catch (Exception e) {
             assertTrue(e.getMessage().contains("does not support being placed in status"));
         }
     }
@@ -72,8 +68,8 @@ public class IncidentHelperTest extends TransactionalTests {
         incident.setStatus(StatusEnum.RESOLVED);
         incident.setExpiryDate(Instant.now());
 
-       incidentHelper.setCorrectValuesForIncidentType(incident);
-       assertEquals(StatusEnum.RESOLVED, incident.getStatus());
+        incidentHelper.setCorrectValuesForIncidentType(incident);
+        assertEquals(StatusEnum.RESOLVED, incident.getStatus());
     }
 
     @Test

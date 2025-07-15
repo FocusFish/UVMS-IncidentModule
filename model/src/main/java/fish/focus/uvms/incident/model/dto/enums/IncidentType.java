@@ -12,7 +12,7 @@ public enum IncidentType {
 
     private List<StatusEnum> validStatuses;
 
-    IncidentType(StatusEnum... statuses){
+    IncidentType(StatusEnum... statuses) {
         validStatuses = Arrays.asList(statuses);
     }
 

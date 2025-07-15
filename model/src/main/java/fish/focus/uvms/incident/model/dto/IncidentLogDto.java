@@ -1,11 +1,12 @@
 package fish.focus.uvms.incident.model.dto;
 
-import java.io.Serializable;
-import java.time.Instant;
-import java.util.UUID;
 import fish.focus.uvms.incident.model.dto.enums.EventTypeEnum;
 import fish.focus.uvms.incident.model.dto.enums.RelatedObjectType;
 import fish.focus.uvms.incident.model.dto.enums.StatusEnum;
+
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.UUID;
 
 public class IncidentLogDto implements Serializable {
     private final static long serialVersionUID = 1L;

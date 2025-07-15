@@ -10,11 +10,10 @@ import javax.transaction.*;
 
 public class TransactionalTests extends BuildIncidentTestDeployment {
 
-    @Inject
-    private UserTransaction userTransaction;
-
     @PersistenceContext
     protected EntityManager em;
+    @Inject
+    private UserTransaction userTransaction;
 
     @Before
     public void before() throws SystemException, NotSupportedException {

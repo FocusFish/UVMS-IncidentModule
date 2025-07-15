@@ -5,7 +5,6 @@ import fish.focus.uvms.incident.model.dto.enums.RelatedObjectType;
 import fish.focus.uvms.incident.service.dao.IncidentLogDao;
 import fish.focus.uvms.incident.service.domain.entities.Incident;
 import fish.focus.uvms.incident.service.domain.entities.IncidentLog;
-import fish.focus.uvms.incident.service.helper.IncidentHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +36,7 @@ public class IncidentLogServiceBean {
         log.setMessage(eventType.getMessage());
         log.setIncidentStatus(updated.getStatus());
         log.setData(data);
-        log.setRelatedObjectType( relatedObjectId == null ? RelatedObjectType.NONE :  eventType.getRelatedObjectType());
+        log.setRelatedObjectType(relatedObjectId == null ? RelatedObjectType.NONE : eventType.getRelatedObjectType());
         incidentLogDao.save(log);
 
     }
@@ -55,13 +54,13 @@ public class IncidentLogServiceBean {
         incidentLogDao.save(log);
     }
 
-    public IncidentLog findLogWithTypeEntryFromTheLastHour(long incidentId, EventTypeEnum eventType){
+    public IncidentLog findLogWithTypeEntryFromTheLastHour(long incidentId, EventTypeEnum eventType) {
         Instant hourAgo = Instant.now().minus(1, ChronoUnit.HOURS);
         List<IncidentLog> incidentLogs = incidentLogDao.findLogWithEventTypeAfter(incidentId, eventType, hourAgo);
         return incidentLogs.isEmpty() ? null : incidentLogs.get(0);
     }
 
-    public IncidentLog findLogWithTypeEntryFromTheLastDay(long incidentId, EventTypeEnum eventType){
+    public IncidentLog findLogWithTypeEntryFromTheLastDay(long incidentId, EventTypeEnum eventType) {
         Instant hourAgo = Instant.now().minus(1, ChronoUnit.DAYS);
         List<IncidentLog> incidentLogs = incidentLogDao.findLogWithEventTypeAfter(incidentId, eventType, hourAgo);
         return incidentLogs.isEmpty() ? null : incidentLogs.get(0);

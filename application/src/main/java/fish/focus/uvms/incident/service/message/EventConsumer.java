@@ -11,7 +11,14 @@ copy of the GNU General Public License along with the IFDM Suite. If not, see <h
  */
 package fish.focus.uvms.incident.service.message;
 
-import java.util.List;
+import fish.focus.uvms.asset.client.model.AssetDTO;
+import fish.focus.uvms.commons.date.JsonBConfigurator;
+import fish.focus.uvms.incident.model.dto.enums.StatusEnum;
+import fish.focus.uvms.incident.service.bean.IncidentServiceBean;
+import fish.focus.uvms.incident.service.domain.entities.Incident;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
@@ -21,13 +28,7 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 import javax.json.bind.Jsonb;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import fish.focus.uvms.asset.client.model.AssetDTO;
-import fish.focus.uvms.commons.date.JsonBConfigurator;
-import fish.focus.uvms.incident.model.dto.enums.StatusEnum;
-import fish.focus.uvms.incident.service.bean.IncidentServiceBean;
-import fish.focus.uvms.incident.service.domain.entities.Incident;
+import java.util.List;
 
 @MessageDriven(activationConfig = {
         @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Topic"),
@@ -36,7 +37,7 @@ import fish.focus.uvms.incident.service.domain.entities.Incident;
         @ActivationConfigProperty(propertyName = "subscriptionName", propertyValue = "incident"),
         @ActivationConfigProperty(propertyName = "clientId", propertyValue = "incident"),
         @ActivationConfigProperty(propertyName = "messageSelector", propertyValue = "event='Updated Asset'")
-    })
+})
 public class EventConsumer implements MessageListener {
 
     private static final Logger LOG = LoggerFactory.getLogger(EventConsumer.class);
@@ -48,7 +49,7 @@ public class EventConsumer implements MessageListener {
 
     @PostConstruct
     public void init() {
-        jsonb =  new JsonBConfigurator().getContext(null);
+        jsonb = new JsonBConfigurator().getContext(null);
     }
 
     @Override

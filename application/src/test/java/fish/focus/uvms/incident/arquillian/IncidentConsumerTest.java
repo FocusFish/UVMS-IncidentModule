@@ -2,7 +2,6 @@ package fish.focus.uvms.incident.arquillian;
 
 import fish.focus.uvms.commons.date.JsonBConfigurator;
 import fish.focus.uvms.incident.BuildIncidentTestDeployment;
-import fish.focus.uvms.spatial.model.schemas.AreaType;
 import fish.focus.uvms.incident.helper.JMSHelper;
 import fish.focus.uvms.incident.helper.TicketHelper;
 import fish.focus.uvms.incident.helper.TopicListener;
@@ -10,6 +9,7 @@ import fish.focus.uvms.incident.model.dto.IncidentDto;
 import fish.focus.uvms.incident.model.dto.IncidentTicketDto;
 import fish.focus.uvms.incident.model.dto.enums.IncidentType;
 import fish.focus.uvms.incident.model.dto.enums.RiskLevel;
+import fish.focus.uvms.spatial.model.schemas.AreaType;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Before;
@@ -49,7 +49,7 @@ public class IncidentConsumerTest extends BuildIncidentTestDeployment {
         UUID assetId = UUID.randomUUID();
         UUID movId = UUID.randomUUID();
         UUID mobTermId = UUID.randomUUID();
-        IncidentTicketDto ticket = TicketHelper.createTicket( assetId, movId, mobTermId);
+        IncidentTicketDto ticket = TicketHelper.createTicket(assetId, movId, mobTermId);
         ticket.setType(IncidentType.ASSET_NOT_SENDING);
 
         try (TopicListener listener = new TopicListener(jmsHelper.EVENT_STREAM, "")) {
