@@ -31,7 +31,7 @@
         <exchange.module>5.4.0</exchange.module>
         <spatial.version>2.3.0</spatial.version>
         <usm4uvms.version>4.2.0</usm4uvms.version>
-        <uvms.pom>3.33</uvms.pom>
+        <uvms.pom>3.34</uvms.pom>
     </properties>
 
     <dependencies>
